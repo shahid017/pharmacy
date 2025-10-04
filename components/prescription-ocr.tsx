@@ -8,10 +8,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Upload, FileImage, Loader2 } from "lucide-react"
 import { extractPrescription } from "@/app/actions/extract-prescription"
 
+interface MedicationInfo {
+  medicineName: string
+  medicineType: string
+  quantity: string
+  frequency: string
+  takingMethod: string
+}
+
 interface ExtractionResult {
   rawText: string
   normalizedText: string
   adminTimes: string[]
+  medicationInfo: MedicationInfo
 }
 
 export function PrescriptionOCR() {
@@ -147,6 +156,41 @@ export function PrescriptionOCR() {
             <CardContent>
               <div className="bg-muted p-4 rounded-md font-mono text-sm whitespace-pre-wrap">
                 {result.normalizedText || "No normalized text available"}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Medication Details</CardTitle>
+              <CardDescription>AI-extracted medication information: name, type, quantity, frequency, and taking method</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-muted-foreground">Medicine:</span>
+                    <span className="font-semibold">{result.medicationInfo.medicineName || "Not detected"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-muted-foreground">Type:</span>
+                    <span className="font-semibold">{result.medicationInfo.medicineType || "Not specified"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-muted-foreground">Quantity:</span>
+                    <span className="font-semibold">{result.medicationInfo.quantity || "Not specified"}</span>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-muted-foreground">Frequency:</span>
+                    <span className="font-semibold">{result.medicationInfo.frequency || "Not specified"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-muted-foreground">Taking Method:</span>
+                    <span className="font-semibold">{result.medicationInfo.takingMethod || "Not specified"}</span>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
