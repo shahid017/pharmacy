@@ -202,7 +202,7 @@ temp/
 *.sw?
 
 # Package lock files (keep one, remove others)
-package-lock.json
+# package-lock.json  # Keep this since we're using npm
 yarn.lock
 pnpm-lock.yaml
 
