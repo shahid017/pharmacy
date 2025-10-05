@@ -60,6 +60,7 @@ function normalizeText(text: string): string {
 async function extractMedicationInfoWithGemini(text: string): Promise<{
   medicineName: string
   medicineType: string
+  medicineDosage: string
   quantity: string
   frequency: string
   takingMethod: string
@@ -82,7 +83,8 @@ Please extract and return ONLY the following information in JSON format:
 {
   "medicineName": "extracted medicine name",
   "medicineType": "tablet/capsule/liquid/etc",
-  "quantity": "dosage amount with units (e.g., '500 mg', '10 ml')",
+  "medicineDosage": "strength/concentration (e.g., '500 mg', '10 ml')",
+  "quantity": "quantity to take (e.g., '1 tablet', '2 capsules', '1 tsp')",
   "frequency": "how often to take (e.g., 'once daily', 'twice daily', 'at bedtime')",
   "takingMethod": "how to take (e.g., 'by mouth', 'with food', 'on empty stomach')",
   "adminTimes": ["array of administration times found"],
@@ -100,7 +102,8 @@ Example output:
 {
   "medicineName": "Metformin",
   "medicineType": "tablet",
-  "quantity": "500 mg",
+  "medicineDosage": "500 mg",
+  "quantity": "1 tablet",
   "frequency": "at bedtime",
   "takingMethod": "by mouth",
   "adminTimes": ["at bedtime"],
@@ -150,7 +153,8 @@ Example output:
     
     return {
       medicineName: medicationInfo.medicineName || "Not specified",
-      medicineType: medicationInfo.medicineType || "Not specified", 
+      medicineType: medicationInfo.medicineType || "Not specified",
+      medicineDosage: medicationInfo.medicineDosage || "Not specified",
       quantity: medicationInfo.quantity || "Not specified",
       frequency: medicationInfo.frequency || "Not specified",
       takingMethod: medicationInfo.takingMethod || "Not specified",
@@ -164,7 +168,8 @@ Example output:
     return {
       medicineName: "Extraction failed",
       medicineType: "Not specified",
-      quantity: "Not specified", 
+      medicineDosage: "Not specified",
+      quantity: "Not specified",
       frequency: "Not specified",
       takingMethod: "Not specified",
       adminTimes: extractAdminTimes(normalized),
@@ -417,6 +422,7 @@ export async function extractPrescription(formData: FormData) {
         medicationInfo: {
           medicineName: medicationInfo.medicineName,
           medicineType: medicationInfo.medicineType,
+          medicineDosage: medicationInfo.medicineDosage,
           quantity: medicationInfo.quantity,
           frequency: medicationInfo.frequency,
           takingMethod: medicationInfo.takingMethod,

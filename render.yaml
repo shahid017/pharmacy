@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: pharmacy-ocr-app
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OCR_PROVIDER
+        value: google
+    # Add your environment variables here or set them in Render dashboard
+

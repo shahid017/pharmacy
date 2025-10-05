@@ -22,7 +22,15 @@ OCR_PROVIDER=google
 ### 2. Build Settings
 - **Build Command**: `npm install && npm run build`
 - **Start Command**: `npm start`
-- **Node.js Version**: 18 (specified in .nvmrc)
+- **Node.js Version**: 20 (specified in .nvmrc)
+- **Package Manager**: npm (not pnpm)
+
+### 2a. Manual Render Configuration
+If using Render dashboard, set these explicitly:
+- **Build Command**: `npm install && npm run build`
+- **Start Command**: `npm start`
+- **Node.js Version**: 20
+- **Auto-Deploy**: Yes
 
 ### 3. Render Configuration
 - **Framework**: Next.js
@@ -47,11 +55,20 @@ Make sure to get your API keys from:
 
 ### 5. Common Issues & Solutions
 
-#### Issue: "Cannot install with frozen-lockfile"
-**Solution**: The `package-lock.json` is now included in the repository to fix this.
+#### Issue: "Cannot install with frozen-lockfile" or "pnpm-lock.yaml is absent"
+**Solution**: 
+1. The `package-lock.json` is included in the repository
+2. Make sure Render is using npm, not pnpm
+3. Set build command to: `npm install && npm run build`
 
 #### Issue: "next: not found"
 **Solution**: Make sure the build command is `npm install && npm run build`.
+
+#### Issue: Render trying to use pnpm instead of npm
+**Solution**: 
+1. In Render dashboard, explicitly set build command to: `npm install && npm run build`
+2. The `render.yaml` file should force npm usage
+3. Make sure `package-lock.json` is in the repository
 
 #### Issue: Environment variables not loading
 **Solution**: Ensure all environment variables are set in Render dashboard under "Environment".
