@@ -11,6 +11,7 @@ import { extractPrescription } from "@/app/actions/extract-prescription"
 interface MedicationInfo {
   medicineName: string
   medicineType: string
+  medicineDosage: string
   quantity: string
   frequency: string
   takingMethod: string
@@ -169,12 +170,16 @@ export function PrescriptionOCR() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <span className="font-medium text-muted-foreground">Medicine:</span>
+                    <span className="font-medium text-muted-foreground">Medicine Name:</span>
                     <span className="font-semibold">{result.medicationInfo.medicineName || "Not detected"}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="font-medium text-muted-foreground">Type:</span>
+                    <span className="font-medium text-muted-foreground">Medicine Type:</span>
                     <span className="font-semibold">{result.medicationInfo.medicineType || "Not specified"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-muted-foreground">Medicine Dosage:</span>
+                    <span className="font-semibold">{result.medicationInfo.medicineDosage || "Not specified"}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium text-muted-foreground">Quantity:</span>
